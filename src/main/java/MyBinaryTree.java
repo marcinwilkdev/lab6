@@ -1,3 +1,6 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class MyBinaryTree<T extends Comparable<T>> {
     private TreeNode<T> root;
 
@@ -98,6 +101,48 @@ public class MyBinaryTree<T extends Comparable<T>> {
                 currentNode = currentNode.left;
             }
         }
+    }
+
+    public String draw() {
+        TreeNode<T> currentNode = root;
+        Deque<TreeNode<T>> nodes = new ArrayDeque<>();
+        StringBuilder sb = new StringBuilder();
+
+        nodes.addFirst(root);
+
+        boolean left = true;
+
+        do {
+            // Travelling to the left
+            while (left && currentNode.left != null) {
+                currentNode = currentNode.left;
+                nodes.addFirst(currentNode);
+            }
+
+            // Printing out value
+            currentNode = nodes.removeFirst();
+            sb.append(currentNode.value).append(" ");
+            left = false;
+
+            // Travelling to the right
+            while (currentNode.right != null) {
+                currentNode = currentNode.right;
+                nodes.addFirst(currentNode);
+
+                if (currentNode.left == null) {
+                    currentNode = nodes.removeFirst();
+                    sb.append(currentNode.value).append(" ");
+                } else {
+                    left = true;
+                    break;
+                }
+
+                left = true;
+            }
+
+        } while (!nodes.isEmpty());
+
+        return sb.toString();
     }
 
     private void deleteTreeReconnect(boolean isRight, TreeNode<T> beforeNode, TreeNode<T> nodeToConnect) {

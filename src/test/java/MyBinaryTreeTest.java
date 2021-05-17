@@ -73,4 +73,21 @@ class MyBinaryTreeTest {
         assertFalse(myBinaryTree.search(10));
         assertTrue(myBinaryTree.search(9));
     }
+
+    @Test
+    void draw() {
+        myBinaryTree.insert(0);
+        myBinaryTree.insert(8);
+        myBinaryTree.insert(10);
+        myBinaryTree.insert(9);
+        myBinaryTree.insert(11);
+        myBinaryTree.insert(12);
+        myBinaryTree.insert(-5);
+        myBinaryTree.insert(-3);
+        myBinaryTree.insert(-4);
+        myBinaryTree.insert(-10);
+        myBinaryTree.insert(-8);
+
+        assertEquals("-10 -8 -5 -4 -3 0 8 9 10 11 12 ", myBinaryTree.draw());
+    }
 }

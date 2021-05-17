@@ -40,6 +40,78 @@ public class MyBinaryTree<T extends Comparable<T>> {
         return false;
     }
 
+    public void delete(T value) {
+        TreeNode<T> beforeNode = null;
+        boolean isRight = false;
+
+        TreeNode<T> currentNode = root;
+
+        while (currentNode != null) {
+            // Behaviour if we found our value in the tree
+            if (currentNode.value.equals(value)) {
+                int siblingsNotNull = 0;
+
+                // Calculating how many siblings of current node are not null
+                siblingsNotNull += (currentNode.left != null) ? 1 : 0;
+                siblingsNotNull += (currentNode.right != null) ? 1 : 0;
+
+                // Connecting left sibling in place of deleted node and connecting
+                // right sibling at the end of the right path of the left sibling
+                if (siblingsNotNull == 2) {
+                    TreeNode<T> nodeToAdd = currentNode.right;
+
+                    deleteTreeReconnect(isRight, beforeNode, currentNode.left);
+
+                    currentNode = currentNode.left;
+
+                    while (currentNode.right != null) currentNode = currentNode.right;
+
+                    currentNode.right = nodeToAdd;
+                }
+                // Connecting not null sibling in place of deleted node
+                else if (siblingsNotNull == 1) {
+                    if (currentNode.right != null) {
+                        deleteTreeReconnect(isRight, beforeNode, currentNode.right);
+                    } else {
+                        deleteTreeReconnect(isRight, beforeNode, currentNode.left);
+                    }
+                }
+                // Setting deleted node to null
+                else {
+                    deleteTreeReconnect(isRight, beforeNode, null);
+                }
+
+                return;
+            }
+
+            // Climbing down the tree and storing information about last node
+            // which is needed in complicated deleting process
+
+            beforeNode = currentNode;
+
+            if (currentNode.value.compareTo(value) < 0){
+                isRight = true;
+                currentNode = currentNode.right;
+            }
+            else {
+                isRight = false;
+                currentNode = currentNode.left;
+            }
+        }
+    }
+
+    private void deleteTreeReconnect(boolean isRight, TreeNode<T> beforeNode, TreeNode<T> nodeToConnect) {
+        if (beforeNode != null) {
+            if (isRight) {
+                beforeNode.right = nodeToConnect;
+            } else {
+                beforeNode.left = nodeToConnect;
+            }
+        } else {
+            root = nodeToConnect;
+        }
+    }
+
     public TreeNode<T> getRoot() {
         return root;
     }

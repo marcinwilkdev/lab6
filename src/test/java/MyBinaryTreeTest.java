@@ -19,8 +19,6 @@ class MyBinaryTreeTest {
 
         assertNotNull(myBinaryTree.getRoot());
         assertEquals(1, myBinaryTree.getRoot().getValue());
-
-
     }
 
     @Test
@@ -50,5 +48,29 @@ class MyBinaryTreeTest {
 
         assertFalse(myBinaryTree.search(1));
         assertFalse(myBinaryTree.search(11));
+    }
+
+    @Test
+    void delete() {
+        myBinaryTree.insert(0);
+        myBinaryTree.insert(8);
+        myBinaryTree.insert(10);
+        myBinaryTree.insert(9);
+        myBinaryTree.insert(11);
+        myBinaryTree.insert(12);
+        myBinaryTree.insert(-5);
+        myBinaryTree.insert(-3);
+        myBinaryTree.insert(-4);
+        myBinaryTree.insert(-10);
+        myBinaryTree.insert(-8);
+
+        myBinaryTree.delete(-5);
+        myBinaryTree.delete(10);
+
+        assertFalse(myBinaryTree.search(-5));
+        assertTrue(myBinaryTree.search(-4));
+
+        assertFalse(myBinaryTree.search(10));
+        assertTrue(myBinaryTree.search(9));
     }
 }

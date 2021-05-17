@@ -36,4 +36,19 @@ class MyBinaryTreeTest {
 
         assertEquals(48, myBinaryTree.getRoot().getRight().getRight().getLeft().getValue());
     }
+
+    @Test
+    void search() {
+        myBinaryTree.insert(5);
+        myBinaryTree.insert(4);
+        myBinaryTree.insert(8);
+        myBinaryTree.insert(6);
+        myBinaryTree.insert(7);
+
+        assertTrue(myBinaryTree.search(8));
+        assertTrue(myBinaryTree.search(7));
+
+        assertFalse(myBinaryTree.search(1));
+        assertFalse(myBinaryTree.search(11));
+    }
 }

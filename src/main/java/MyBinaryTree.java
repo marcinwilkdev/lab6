@@ -24,7 +24,20 @@ public class MyBinaryTree<T extends Comparable<T>> {
                     currentNode = currentNode.left;
                 }
             }
-        } while (currentNode.value.compareTo(value) != 0);
+        } while (!currentNode.value.equals(value));
+    }
+
+    public boolean search(T value) {
+        TreeNode<T> currentNode = root;
+
+        while (currentNode != null) {
+            if (currentNode.value.equals(value)) return true;
+
+            if (currentNode.value.compareTo(value) < 0) currentNode = currentNode.right;
+            else currentNode = currentNode.left;
+        }
+
+        return false;
     }
 
     public TreeNode<T> getRoot() {

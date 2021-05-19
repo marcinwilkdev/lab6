@@ -1,7 +1,7 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class MyBinaryTree<T extends Comparable<T>> {
+public class MyBinaryTree<T extends Comparable<? super T>> {
     private TreeNode<T> root;
 
     public void insert(T value) {
@@ -161,11 +161,7 @@ public class MyBinaryTree<T extends Comparable<T>> {
         return root;
     }
 
-    public void setRoot(TreeNode<T> root) {
-        this.root = root;
-    }
-
-    public class TreeNode<R extends Comparable<R>> {
+    public static class TreeNode<R extends Comparable<? super R>> {
         private TreeNode<R> left;
         private R value;
         private TreeNode<R> right;
